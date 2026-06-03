@@ -1,85 +1,282 @@
-# Multi-Agent Research
+# 🔍 Multi-Agent Research Assistant
 
-Lightweight research platform that coordinates multiple agent roles (researcher, critic, writer, summarizer, and a coordinator) with a FastAPI backend and a minimal frontend.
+An AI-powered research platform that leverages multiple specialized agents to generate high-quality research reports from user queries. The system combines web search, agent collaboration, critique, and report generation into a single workflow.
 
-**Quick summary:** orchestrates agent interactions, persists reports via the backend, and exposes a simple frontend for viewing and interacting with the system.
+## 🚀 Features
 
-**Requirements:**
-- **Python:** 3.10+
-- **Packages:** see `requirements.txt` (install with `pip install -r requirements.txt`)
+- 🔐 JWT Authentication
+- 🤖 Multi-Agent Architecture
+- 🌐 Real-time Web Research using Tavily
+- 📝 Automated Report Generation
+- 🎯 Research Validation & Critique
+- 📊 Report History Dashboard
+- 💾 Database Persistence
+- 📄 PDF Export Support
+- ⚡ FastAPI Backend
+- 🎨 Streamlit Frontend
 
-**Project layout**
-- **`agents/`**: agent implementations and `llm.py` interface (see [agents/coordinator_agent.py](agents/coordinator_agent.py), [agents/research_agent.py](agents/research_agent.py)).
-- **`backend/`**: FastAPI app, DB layer, auth and API routes (entry: [backend/main.py](backend/main.py)).
-- **`frontend/`**: small UI and pages (entry: [frontend/app.py](frontend/app.py)).
-- Top-level: `app.py` (frontend runner), `requirements.txt`, ReadME.md.
+---
 
-**Quick start (development)**
-1. Create and activate a virtualenv (recommended):
+## 🏗️ System Architecture
 
+```text
+User Query
+     │
+     ▼
+Coordinator Agent
+     │
+     ├─────────────► Research Agent
+     │                    │
+     │                    ▼
+     │              Tavily Search
+     │                    │
+     ▼                    ▼
+Critic Agent ◄──── Research Results
+     │
+     ▼
+Writer Agent
+     │
+     ▼
+Summarizer Agent
+     │
+     ▼
+Final Research Report
 ```
+
+---
+
+## 🧠 Agent Responsibilities
+
+### Coordinator Agent
+- Manages workflow execution
+- Delegates tasks to specialized agents
+- Combines outputs into a final report
+
+### Research Agent
+- Searches the web using Tavily
+- Collects relevant information
+- Extracts key insights from sources
+
+### Critic Agent
+- Reviews research quality
+- Detects missing information
+- Suggests improvements
+
+### Writer Agent
+- Creates structured research reports
+- Organizes findings professionally
+- Maintains clarity and coherence
+
+### Summarizer Agent
+- Generates concise summaries
+- Highlights key takeaways
+- Produces executive overviews
+
+---
+
+## 🛠️ Tech Stack
+
+### Backend
+- FastAPI
+- SQLAlchemy
+- JWT Authentication
+- SQLite / PostgreSQL
+
+### AI Layer
+- OpenAI GPT Models
+- Tavily Search API
+
+### Frontend
+- Streamlit
+
+### Database
+- SQLite
+- PostgreSQL (Optional)
+
+---
+
+## 📂 Project Structure
+
+```bash
+Multi-Agent-Research-Assistant/
+│
+├── agents/
+│   ├── coordinator_agent.py
+│   ├── research_agent.py
+│   ├── critic_agent.py
+│   ├── writer_agent.py
+│   ├── summarizer_agent.py
+│   └── llm.py
+│
+├── backend/
+│   ├── routes/
+│   ├── database.py
+│   ├── models.py
+│   ├── schemas.py
+│   └── main.py
+│
+├── frontend/
+│   ├── pages/
+│   └── app.py
+│
+├── requirements.txt
+├── app.py
+└── README.md
+```
+
+---
+
+## ⚙️ Installation
+
+### Clone Repository
+
+```bash
+git clone https://github.com/madhavzer0oo0/Multi-Agent-Research-Assistant.git
+
+cd Multi-Agent-Research-Assistant
+```
+
+### Create Virtual Environment
+
+```bash
 python -m venv .venv
-# Windows
+```
+
+Windows:
+
+```bash
 .venv\Scripts\activate
-# macOS / Linux
+```
+
+Linux/macOS:
+
+```bash
 source .venv/bin/activate
 ```
 
-2. Install dependencies:
+### Install Dependencies
 
-```
+```bash
 pip install -r requirements.txt
 ```
 
-3. Set environment variables (example):
+---
 
-- `DATABASE_URL` — database connection string (if applicable)
-- `SECRET_KEY` — app secret for auth
-- `OPENAI_API_KEY` — optional: LLM API key used by `agents/llm.py`
+## 🔑 Environment Variables
 
-4. Run the backend API:
+Create a `.env` file in the root directory:
 
-```
-uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000
-```
+```env
+OPENAI_API_KEY=your_openai_key
 
-5. Run the frontend (from project root):
+TAVILY_API_KEY=your_tavily_key
 
-```
-python app.py
+SECRET_KEY=your_secret_key
+
+DATABASE_URL=sqlite:///research.db
 ```
 
-If the frontend uses Streamlit, you can run:
+---
 
+## ▶️ Running the Application
+
+### Start Backend
+
+```bash
+uvicorn backend.main:app --reload
 ```
-cd frontend
-streamlit run app.py
+
+Backend:
+
+```text
+http://localhost:8000
 ```
 
-**Agents (overview)**
-- **Coordinator** (`agents/coordinator_agent.py`): orchestrates tasks across agents and composes workflows.
-- **Researcher** (`agents/research_agent.py`): performs information gathering and research steps.
-- **Critic** (`agents/critic_agent.py`): evaluates outputs and suggests improvements.
-- **Writer** (`agents/writer_agent.py`): drafts text and generates report content.
-- **Summarizer** (`agents/summerizer_agent.py`): condenses results into concise summaries.
-- **LLM interface** (`agents/llm.py`): single place to integrate with external LLM providers.
+Swagger Docs:
 
-**Backend notes**
-- API routes are under `backend/routes/` (see [backend/routes/report_routes.py](backend/routes/report_routes.py) and [backend/routes/auth_routes.py](backend/routes/auth_routes.py)).
-- DB models and schemas live in `backend/models.py` and `backend/schemas.py`.
+```text
+http://localhost:8000/docs
+```
 
-**Development tips**
-- Keep secrets out of version control; use a `.env` file or your OS environment.
-- If you add new dependencies, update `requirements.txt` with `pip freeze > requirements.txt` from your virtualenv.
+---
 
-**Contributing**
-- Open issues for bugs or enhancements.
-- Create feature branches and submit PRs with clear descriptions and tests where applicable.
+### Start Frontend
 
-**License**
-- MIT (or change to your preferred license).
+```bash
+streamlit run frontend/app.py
+```
 
-If you want, I can also:
-- add a `.env.example` with recommended variables
-- add a `Makefile` or `scripts/` to simplify common commands
-- run the app locally and verify endpoints
+Frontend:
+
+```text
+http://localhost:8501
+```
+
+---
+
+## 📸 Screenshots
+
+### Login Page
+
+_Add screenshot here_
+
+### Dashboard
+
+_Add screenshot here_
+
+### Generated Research Report
+
+_Add screenshot here_
+
+---
+
+## 🔄 Research Workflow
+
+1. User submits a research topic.
+2. Coordinator Agent initiates workflow.
+3. Research Agent searches the web using Tavily.
+4. Critic Agent reviews gathered information.
+5. Writer Agent generates a detailed report.
+6. Summarizer Agent creates an executive summary.
+7. Final report is stored and displayed.
+
+---
+
+## 📈 Future Improvements
+
+- RAG with PDF Uploads
+- Vector Database Integration
+- Semantic Search
+- Streaming Agent Responses
+- LangGraph Workflow Visualization
+- Multi-modal Research (PDFs, Images, Videos)
+- Docker Deployment
+- CI/CD Pipeline
+
+---
+
+## 🎯 Why This Project?
+
+This project demonstrates:
+
+- Multi-Agent AI Systems
+- LLM Orchestration
+- FastAPI Development
+- Authentication & Authorization
+- Database Design
+- Tool Calling
+- Web Search Integration
+- Full-Stack AI Development
+
+---
+
+## 👨‍💻 Author
+
+**Madhav Dembla**
+
+- GitHub: https://github.com/madhavzer0oo0
+---
+
+## ⭐ Support
+
+If you found this project useful, consider giving it a star on GitHub!
