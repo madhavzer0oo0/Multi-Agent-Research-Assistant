@@ -214,21 +214,6 @@ http://localhost:8501
 
 ---
 
-## 📸 Screenshots
-
-### Login Page
-
-_Add screenshot here_
-
-### Dashboard
-
-_Add screenshot here_
-
-### Generated Research Report
-
-_Add screenshot here_
-
----
 
 ## 🔄 Research Workflow
 
