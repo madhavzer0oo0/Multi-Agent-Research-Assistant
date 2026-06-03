@@ -1,0 +1,12 @@
+streamlit
+requests
+fastapi
+uvicorn
+sqlalchemy
+python-jose[cryptography]
+email-validator
+langchain
+langchain-groq
+python-dotenv
+reportlab
+
