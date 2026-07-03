@@ -15,7 +15,7 @@ def build_llm(
     max_tokens: int = 900,
 ) -> ChatGroq:
     load_dotenv()
-    if not os.getenv("GROQ_API_KEY") or os.getenv("GROQ_API_KEY") == "your_groq_api_key_here":
+    if not os.getenv("GROQ_API_KEY"):
         raise RuntimeError("Set GROQ_API_KEY in your .env file before running the app.")
     return ChatGroq(model=model_name, temperature=temperature, max_tokens=max_tokens)
 

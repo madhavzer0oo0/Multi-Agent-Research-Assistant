@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Multi-Agent Research Assistant</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Report history">
+        <div class="brand-block">
+          <p class="eyebrow">Research Workspace</p>
+          <h1>Multi-Agent Research</h1>
+        </div>
+
+        <div class="history-header">
+          <h2>Reports</h2>
+          <button class="icon-button" id="refreshReportsButton" type="button" title="Refresh reports" aria-label="Refresh reports">
+            &#8635;
+          </button>
+        </div>
+
+        <div class="report-list" id="reportList">
+          <p class="muted">Sign in to load reports.</p>
+        </div>
+
+        <button class="secondary-button hidden" id="logoutButton" type="button">Logout</button>
+      </aside>
+
+      <main class="main-panel">
+        <section class="auth-view" id="authView" aria-labelledby="authTitle">
+          <div class="auth-copy">
+            <p class="eyebrow">Assistant Console</p>
+            <h2 id="authTitle">Sign in to continue</h2>
+          </div>
+
+          <div class="auth-tabs" role="tablist" aria-label="Authentication mode">
+            <button class="tab-button active" id="loginTab" type="button" role="tab" aria-selected="true">Login</button>
+            <button class="tab-button" id="registerTab" type="button" role="tab" aria-selected="false">Register</button>
+          </div>
+
+          <form class="auth-form" id="authForm">
+            <label for="emailInput">Email</label>
+            <input id="emailInput" name="email" type="email" autocomplete="email" required>
+
+            <label for="passwordInput">Password</label>
+            <input id="passwordInput" name="password" type="password" autocomplete="current-password" minlength="8" required>
+
+            <button class="primary-button" id="authSubmitButton" type="submit">Login</button>
+          </form>
+          <div class="status-line" id="authStatusLine" role="status" aria-live="polite"></div>
+        </section>
+
+        <section class="dashboard-view hidden" id="dashboardView" aria-labelledby="dashboardTitle">
+          <div class="dashboard-header">
+            <div>
+              <p class="eyebrow">Report Generator</p>
+              <h2 id="dashboardTitle">Create a research report</h2>
+            </div>
+            <div class="account-chip" id="accountChip"></div>
+          </div>
+
+          <form class="generator-form" id="reportForm">
+            <label for="topicInput">Research topic</label>
+            <div class="topic-row">
+              <input id="topicInput" name="topic" type="text" placeholder="e.g. Multi-Agent Systems, RAG, LLM Agents" minlength="2" maxlength="500" required>
+              <label class="results-field" for="maxResultsInput">
+                Results
+                <input id="maxResultsInput" name="maxResults" type="number" min="1" max="5" value="3">
+              </label>
+              <button class="primary-button" id="generateButton" type="submit">Generate</button>
+            </div>
+          </form>
+
+          <div class="status-line" id="statusLine" role="status" aria-live="polite"></div>
+
+          <article class="report-output hidden" id="reportOutput">
+            <div class="report-toolbar">
+              <div>
+                <p class="eyebrow">Selected Report</p>
+                <h3 id="reportTitle"></h3>
+                <p class="muted" id="reportDate"></p>
+              </div>
+              <div class="toolbar-actions">
+                <button class="secondary-button" id="downloadMarkdownButton" type="button">Download MD</button>
+                <button class="secondary-button" id="printButton" type="button">Print PDF</button>
+                <button class="danger-button" id="deleteReportButton" type="button">Delete</button>
+              </div>
+            </div>
+            <div class="report-content" id="reportContent"></div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

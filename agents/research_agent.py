@@ -11,12 +11,12 @@ class ResearchAgent:
 
     def run(self, max_results=5):
         api_key = os.getenv("TAVILY_API_KEY")
-        if not api_key or api_key == "your_tavily_api_key_here":
+        if not api_key :
             raise RuntimeError("Set TAVILY_API_KEY in your .env file before running the app.")
 
         search_payloads = [
             {
-                "query": self.topic,
+                "query": self.topic, 
                 "search_depth": "basic",
                 "max_results": max_results,
                 "include_answer": False,
