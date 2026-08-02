@@ -2,6 +2,7 @@ requests
 fastapi
 uvicorn
 sqlalchemy
+psycopg[binary]
 python-jose[cryptography]
 email-validator
 python-multipart
